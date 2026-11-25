@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Learn+ Room — Smart Classroom System</title>
+  <meta name="description" content="Learn+ Room: an IoT-based smart classroom system. Nadia Blaibleh & Marah Zaid, An-Najah National University.">
+  <meta name="theme-color" content="#071430">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23071430'/%3E%3Cpath d='M16 7v18M7 16h18' stroke='%23FFC24A' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-tone="dark">
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <main id="stage" aria-live="polite">
+
+    <!-- ============ 01 · THE IDEA ============ -->
+    <section class="slide s-idea" data-tone="dark" aria-label="The idea">
+      <div class="idea-copy">
+        <p class="eyebrow rv" style="--d:100">IoT smart classroom system</p>
+        <h1 class="wordmark rv" style="--d:250">
+          <span class="wm-learn">Learn<span class="wm-plus" aria-hidden="true"></span></span>
+          <span class="wm-room">Room</span>
+          <span class="sr">Learn+ Room</span>
+        </h1>
+        <p class="idea-tag rv" style="--d:550">The classroom, <em>connected.</em></p>
+        <p class="idea-lede rv" style="--d:750">One system for access, attendance, lighting, air quality and seating, managed from a single app.</p>
+        <div class="idea-team rv" style="--d:1000">
+          <p><b>Nadia Blaibleh</b> &amp; <b>Marah Zaid</b></p>
+          <p>Computer Engineering · An-Najah National University</p>
+          <p class="muted">Supervised by Dr. Anas Toma</p>
+        </div>
+      </div>
+
+      <figure class="idea-visual rv" style="--d:300" aria-hidden="true">
+        <svg viewBox="0 0 600 600" class="room-svg">
+          <defs>
+            <radialGradient id="glowCore" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#38C6E8" stop-opacity=".55"/>
+              <stop offset="1" stop-color="#38C6E8" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="lampCone" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FFC24A" stop-opacity=".55"/><stop offset="1" stop-color="#FFC24A" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="plusGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFD66B"/><stop offset="1" stop-color="#FF9A3D"/>
+            </linearGradient>
+          </defs>
+          <!-- wifi arcs -->
+          <g class="wifi" fill="none" stroke="#38C6E8" stroke-width="7" stroke-linecap="round">
+            <path d="M262 92a54 54 0 0 1 76 0" class="arc a1"/>
+            <path d="M240 70a86 86 0 0 1 120 0" class="arc a2"/>
+            <path d="M218 48a118 118 0 0 1 164 0" class="arc a3"/>
+          </g>
+          <!-- house-shaped room outline -->
+          <path class="room-outline" d="M300 128 L470 246 V520 H130 V246 Z" fill="none" stroke="#9FC3E8" stroke-width="5" stroke-linejoin="round"/>
+          <!-- inner board and desks -->
+          <rect x="235" y="300" width="130" height="80" rx="6" class="room-line" />
+          <path d="M215 430h170" class="room-line"/>
+          <path d="M240 430v35M300 430v35M360 430v35" class="room-line thin"/>
+          <!-- pendant lamp -->
+          <path d="M300 200v28" class="room-line thin"/>
+          <path d="M282 252l6-24h24l6 24z" fill="#FFC24A" class="lamp"/>
+          <path d="M284 252 L316 252 L362 300 L238 300 Z" fill="url(#lampCone)" class="lamp-glow"/>
+          <circle cx="300" cy="400" r="120" fill="url(#glowCore)" class="core-glow"/>
+          <!-- links to modules -->
+          <g class="links" fill="none" stroke="#38C6E8" stroke-width="2.5" stroke-linecap="round">
+            <path d="M130 300 H70" pathLength="1"/>
+            <path d="M130 400 H70" pathLength="1"/>
+            <path d="M130 500 H70" pathLength="1"/>
+            <path d="M470 300 H530" pathLength="1"/>
+            <path d="M470 400 H530" pathLength="1"/>
+            <path d="M470 500 H530" pathLength="1"/>
+          </g>
+          <g class="pulses" fill="#7FE3FF">
+            <circle r="4"><animateMotion dur="2.4s" repeatCount="indefinite" path="M130 300 H70"/></circle>
+            <circle r="4"><animateMotion dur="2.4s" begin=".8s" repeatCount="indefinite" path="M70 400 H130"/></circle>
+            <circle r="4"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite" path="M130 500 H70"/></circle>
+            <circle r="4"><animateMotion dur="2.4s" begin=".4s" repeatCount="indefinite" path="M530 300 H470"/></circle>
+            <circle r="4"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" path="M470 400 H530"/></circle>
+            <circle r="4"><animateMotion dur="2.4s" begin="2s" repeatCount="indefinite" path="M530 500 H470"/></circle>
+          </g>
+        </svg>
+        <!-- module badges positioned over the svg -->
+        <span class="node n1" style="--x:11.7%;--y:50%"><i data-icon="camera"></i></span>
+        <span class="node n2" style="--x:11.7%;--y:66.6%"><i data-icon="bulb"></i></span>
+        <span class="node n3" style="--x:11.7%;--y:83.3%"><i data-icon="chair"></i></span>
+        <span class="node n4" style="--x:88.3%;--y:50%"><i data-icon="fan"></i></span>
+        <span class="node n5" style="--x:88.3%;--y:66.6%"><i data-icon="lock"></i></span>
+        <span class="node n6" style="--x:88.3%;--y:83.3%"><i data-icon="mic"></i></span>
+      </figure>
+    </section>
+
+    <!-- ============ 02 · THE PROBLEM ============ -->
+    <section class="slide s-problem" data-tone="light" aria-label="The problem">
+      <header class="head">
+        <p class="eyebrow rv" style="--d:50">The problem</p>
+        <h2 class="rv" style="--d:150">Most classrooms still run <em>by hand.</em></h2>
+      </header>
+
+      <figure class="classroom rv" style="--d:250" aria-hidden="true">
+        <svg viewBox="0 0 640 460">
+          <g class="cl" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 400 H630" class="floor"/>
+            <!-- door -->
+            <rect x="30" y="170" width="78" height="230" rx="3"/>
+            <circle cx="96" cy="290" r="4"/>
+            <!-- switch -->
+            <rect x="128" y="250" width="22" height="34" rx="4"/>
+            <path d="M139 260v14"/>
+            <!-- board -->
+            <rect x="190" y="80" width="270" height="150" rx="6"/>
+            <path d="M215 230v18M435 230v18M200 248h250"/>
+            <!-- lamps -->
+            <path d="M150 0v44M500 0v44"/>
+            <path d="M126 64l10-20h28l10 20z" class="lampshape"/>
+            <path d="M476 64l10-20h28l10 20z" class="lampshape"/>
+            <!-- window -->
+            <rect x="520" y="110" width="96" height="120" rx="4"/>
+            <path d="M568 110v120M520 170h96"/>
+            <!-- thermometer -->
+            <path d="M584 266v42a12 12 0 1 0 10 0v-42a5 5 0 0 0-10 0z"/>
+            <!-- teacher desk + clipboard -->
+            <path d="M186 312h120M196 312v88M296 312v88"/>
+            <rect x="218" y="282" width="40" height="30" rx="3"/>
+            <path d="M226 292h22M226 300h16"/>
+            <!-- rows of chairs -->
+            <g class="chairs">
+              <path d="M350 330h44v-48M350 330v70M394 330v70M350 360h44"/>
+              <path d="M430 330h44v-48M430 330v70M474 330v70M430 360h44"/>
+              <path d="M510 330h44v-48M510 330v70M554 330v70M510 360h44"/>
+            </g>
+          </g>
+          <!-- lamp glow (energy waste) -->
+          <path d="M120 66 L180 66 L210 140 L90 140 Z" class="waste-glow"/>
+          <path d="M470 66 L530 66 L560 140 L440 140 Z" class="waste-glow"/>
+          <!-- heat haze -->
+          <g class="haze"><circle cx="589" cy="318" r="22"/></g>
+        </svg>
+        <!-- hotspots -->
+        <span class="hot" style="--x:37%;--y:63%;--d:700">1</span>
+        <span class="hot" style="--x:23.4%;--y:22%;--d:1050">2</span>
+        <span class="hot" style="--x:91.2%;--y:58%;--d:1400">3</span>
+        <span class="hot" style="--x:21.6%;--y:50%;--d:1750">4</span>
+        <span class="hot" style="--x:70.3%;--y:60%;--d:2100">5</span>
+      </figure>
+
+      <ol class="problems">
+        <li class="rv" style="--d:700"><b>1</b><div><h3>Manual attendance</h3><p>Roll call takes time away from teaching.</p></div></li>
+        <li class="rv" style="--d:1050"><b>2</b><div><h3>Energy waste</h3><p>Lights and fans are left on with no one to switch them off.</p></div></li>
+        <li class="rv" style="--d:1400"><b>3</b><div><h3>No environmental monitoring</h3><p>Heat and CO<sub>2</sub> build up without anyone noticing.</p></div></li>
+        <li class="rv" style="--d:1750"><b>4</b><div><h3>Limited automation</h3><p>Every device is switched and checked by hand.</p></div></li>
+        <li class="rv" style="--d:2100"><b>5</b><div><h3>Static arrangement</h3><p>One fixed seating layout for lectures, exams and group work.</p></div></li>
+      </ol>
+    </section>
+
+    <!-- ============ 03 · OUR SOLUTION ============ -->
+    <section class="slide s-solution" data-tone="dark" aria-label="Our solution">
+      <header class="head">
+        <p class="eyebrow rv" style="--d:50">Our solution</p>
+        <h2 class="rv" style="--d:150">One connected room, <em>where every system works together.</em></h2>
+      </header>
+
+      <div class="values">
+        <div class="value rv" style="--d:1500"><i data-icon="clock"></i><div><h3>Saves time</h3><p>Entry and attendance happen automatically.</p></div></div>
+        <div class="value rv" style="--d:1700"><i data-icon="bolt"></i><div><h3>Saves energy</h3><p>Lights and fan respond to presence, daylight and temperature.</p></div></div>
+        <div class="value rv" style="--d:1900"><i data-icon="leaf"></i><div><h3>Healthier room</h3><p>Temperature and CO<sub>2</sub> are watched continuously.</p></div></div>
+        <div class="value rv" style="--d:2100"><i data-icon="phone"></i><div><h3>One place to manage it</h3><p>Monitor and control the room from a mobile app.</p></div></div>
+      </div>
+
+      <figure class="hub rv" style="--d:200" aria-label="Seven connected capabilities">
+        <svg viewBox="0 0 700 700" class="hub-lines" aria-hidden="true">
+          <circle cx="350" cy="350" r="250" class="orbit"/>
+          <circle cx="350" cy="350" r="160" class="orbit faint"/>
+          <g class="spokes"></g>
+        </svg>
+        <div class="hub-core">
+          <span class="hub-mark">Learn<span class="wm-plus small" aria-hidden="true"></span><br>Room</span>
+        </div>
+        <ul class="hub-nodes">
+          <li><i data-icon="door"></i><span>Access control</span></li>
+          <li><i data-icon="face"></i><span>Automatic attendance</span></li>
+          <li><i data-icon="bulb"></i><span>Smart lighting</span></li>
+          <li><i data-icon="thermo"></i><span>Climate &amp; air quality</span></li>
+          <li><i data-icon="chair"></i><span>Adaptive chairs</span></li>
+          <li><i data-icon="mic"></i><span>Voice assistant</span></li>
+          <li><i data-icon="phone"></i><span>Mobile app</span></li>
+        </ul>
+      </figure>
+    </section>
+
+    <!-- ============ 04 · HOW IT WORKS ============ -->
+    <section class="slide s-how" data-tone="dark" aria-label="How it works">
+      <header class="head">
+        <p class="eyebrow rv" style="--d:50">How it works</p>
+        <h2 class="rv" style="--d:150">From sensor to smartphone, <em>in real time.</em></h2>
+      </header>
+
+      <div class="flow">
+        <svg class="flow-lines" viewBox="0 0 1440 470" preserveAspectRatio="none" aria-hidden="true">
+          <!-- modules -> hub (four inputs converge) -->
+          <g class="wires">
+            <path id="w1" d="M300 62 C 380 62, 400 205, 470 205"/>
+            <path id="w2" d="M300 158 C 380 158, 400 215, 470 215"/>
+            <path id="w3" d="M300 254 C 380 254, 400 225, 470 225"/>
+            <path id="w4" d="M300 350 C 380 350, 400 235, 470 235"/>
+            <path id="w5" d="M760 220 H 900"/>
+            <path id="w6" d="M1120 220 H 1220"/>
+          </g>
+          <g class="packets up">
+            <circle r="6"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#w1"/></animateMotion></circle>
+            <circle r="6"><animateMotion dur="2.2s" begin=".55s" repeatCount="indefinite"><mpath href="#w2"/></animateMotion></circle>
+            <circle r="6"><animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite"><mpath href="#w3"/></animateMotion></circle>
+            <circle r="6"><animateMotion dur="2.2s" begin="1.65s" repeatCount="indefinite"><mpath href="#w4"/></animateMotion></circle>
+            <circle r="6"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#w5"/></animateMotion></circle>
+            <circle r="6"><animateMotion dur="1.3s" begin=".3s" repeatCount="indefinite"><mpath href="#w6"/></animateMotion></circle>
+          </g>
+          <g class="packets down">
+            <circle r="5"><animateMotion dur="1.3s" begin=".9s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#w6"/></animateMotion></circle>
+            <circle r="5"><animateMotion dur="1.6s" begin="1.2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#w5"/></animateMotion></circle>
+            <circle r="5"><animateMotion dur="2.2s" begin="1.4s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#w2"/></animateMotion></circle>
+          </g>
+        </svg>
+
+        <div class="col col-modules">
+          <p class="col-label rv" style="--d:300">In the classroom</p>
+          <div class="chip rv" style="--d:400"><i data-icon="door"></i><span>Door</span></div>
+          <div class="chip rv" style="--d:480"><i data-icon="bulb"></i><span>Lighting</span></div>
+          <div class="chip rv" style="--d:560"><i data-icon="thermo"></i><span>Climate</span></div>
+          <div class="chip rv" style="--d:640"><i data-icon="chair"></i><span>Chairs</span></div>
+          <p class="col-note rv" style="--d:700">ESP32 boards on Wi-Fi</p>
+        </div>
+
+        <div class="col col-hub rv" style="--d:850">
+          <p class="col-label">Room hub</p>
+          <div class="box big">
+            <i data-icon="cpu"></i>
+            <h3>Raspberry Pi</h3>
+            <p>The room's brain. Talks to every module over <b>MQTT</b>.</p>
+          </div>
+          <div class="peripherals">
+            <span><i data-icon="camera"></i>Camera</span>
+            <span><i data-icon="mic"></i>Mic</span>
+            <span><i data-icon="speaker"></i>Speaker</span>
+          </div>
+        </div>
+
+        <div class="col col-cloud rv" style="--d:1150">
+          <p class="col-label">Cloud</p>
+          <div class="box">
+            <i data-icon="cloud"></i>
+            <h3>Firebase</h3>
+            <p>Syncs live data, schedules and records.</p>
+          </div>
+        </div>
+
+        <div class="col col-app rv" style="--d:1400">
+          <p class="col-label">Mobile app</p>
+          <div class="box">
+            <i data-icon="phone"></i>
+            <h3>Learn+ Room</h3>
+            <p>Monitor and control from anywhere.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend rv" style="--d:1700">
+        <span><i class="dot up"></i>Sensor data flows up</span>
+        <span><i class="dot down"></i>Commands flow back down</span>
+      </div>
+    </section>
+
+    <!-- ============ 05 · WHAT WE BUILT ============ -->
+    <section class="slide s-built" data-tone="light" aria-label="What we built">
+      <header class="head row">
+        <div>
+          <p class="eyebrow rv" style="--d:50">What we built</p>
+          <h2 class="rv" style="--d:150">A working prototype, <em>built and tested in the lab.</em></h2>
+        </div>
+      </header>
+
+      <div class="bento">
+        <article class="tile t-access rv" style="--d:300">
+          <div class="tile-media duo">
+            <img src="assets/img/access-door.jpg" alt="Door access unit with LCD, barcode scanner and keypad">
+            <img src="assets/img/attendance-camera.jpg" alt="OAK-D AI camera used for attendance">
+          </div>
+          <div class="tile-text">
+            <h3>Smart access &amp; attendance</h3>
+            <p>An ID scan or PIN opens the door only for enrolled students during their lecture. A camera recognises faces to record attendance.</p>
+          </div>
+        </article>
+
+        <article class="tile t-env rv" style="--d:450">
+          <div class="tile-media duo">
+            <img src="assets/img/lighting-module.jpg" alt="Lighting module with motion sensor">
+            <img src="assets/img/climate-module.jpg" alt="Temperature and CO2 module">
+          </div>
+          <div class="tile-text">
+            <h3>Smart lighting &amp; climate</h3>
+            <p>Lights respond to presence and daylight (Auto, Manual and Projector modes). Fan speed follows temperature; high CO<sub>2</sub> triggers alerts.</p>
+          </div>
+        </article>
+
+        <article class="tile t-chairs rv" style="--d:600">
+          <div class="tile-media">
+            <img src="assets/img/chairs-group.jpg" alt="Two motorised smart chairs">
+          </div>
+          <div class="tile-text">
+            <h3>Smart adaptive chairs</h3>
+            <p>Motorised chairs rearrange themselves on command.</p>
+            <ul class="modes"><li>Lecture</li><li>Exam</li><li>Group</li></ul>
+          </div>
+        </article>
+
+        <article class="tile t-norma rv" style="--d:750">
+          <div class="tile-media voice" aria-hidden="true">
+            <div class="bubble">“Norma…”</div>
+            <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="tile-text">
+            <h3>Norma, the voice assistant</h3>
+            <p>Wakes when it hears its name and announces CO<sub>2</sub> alarms, door events and fan status.</p>
+          </div>
+        </article>
+
+        <article class="tile t-app rv" style="--d:900">
+          <div class="phones">
+            <img class="ph ph-back" src="assets/img/app-report.png" alt="App lecture report screen">
+            <img class="ph ph-front" src="assets/img/app-dashboard.png" alt="App room dashboard screen">
+          </div>
+          <div class="tile-text">
+            <h3>Mobile app</h3>
+            <p>Live room status, remote control of every module, and lecture reports.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 06 · SUPPORT ============ -->
+    <section class="slide s-support" data-tone="light" aria-label="Taking Learn+ Room to the next level">
+      <header class="head">
+        <p class="eyebrow rv" style="--d:50">How you can help</p>
+        <h2 class="rv" style="--d:150">Taking Learn+ Room <em>to the next level.</em></h2>
+      </header>
+
+      <div class="road">
+        <div class="road-track" aria-hidden="true"><span class="road-fill"></span></div>
+        <ol class="stations">
+          <li class="done rv" style="--d:400"><span class="pin"><i data-icon="check"></i></span><b>Working prototype</b><em class="here">We are here</em></li>
+          <li class="rv" style="--d:700"><span class="pin"></span><b>Real-world testing</b></li>
+          <li class="rv" style="--d:950"><span class="pin"></span><b>Refinement</b></li>
+          <li class="rv" style="--d:1200"><span class="pin"></span><b>Scalable product</b></li>
+        </ol>
+      </div>
+
+      <div class="asks">
+        <article class="ask rv" style="--d:1450">
+          <span class="ask-n">01</span>
+          <i data-icon="school"></i>
+          <h3>Real-world pilot testing</h3>
+          <ul>
+            <li>Access to a real classroom or a suitable test space</li>
+            <li>Feedback and evaluation under real conditions</li>
+          </ul>
+          <p class="leads">Leads to <b>real-world testing</b></p>
+        </article>
+        <article class="ask rv" style="--d:1600">
+          <span class="ask-n">02</span>
+          <i data-icon="users"></i>
+          <h3>Technical mentorship</h3>
+          <ul>
+            <li>Guidance from experienced IoT and embedded engineers</li>
+            <li>Advice on reliability, integration and scaling</li>
+          </ul>
+          <p class="leads">Leads to <b>refinement</b></p>
+        </article>
+        <article class="ask rv" style="--d:1750">
+          <span class="ask-n">03</span>
+          <i data-icon="chip"></i>
+          <h3>Development resources</h3>
+          <ul>
+            <li>Funding, or help getting hardware and components</li>
+            <li>To refine the prototype and test beyond the lab</li>
+          </ul>
+          <p class="leads">Leads to <b>refinement</b></p>
+        </article>
+        <article class="ask rv" style="--d:1900">
+          <span class="ask-n">04</span>
+          <i data-icon="network"></i>
+          <h3>Product development &amp; networking</h3>
+          <ul>
+            <li>Guidance on turning the project into a product</li>
+            <li>Connections with educational institutions and potential users</li>
+          </ul>
+          <p class="leads">Leads to <b>a scalable product</b></p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 07 · THE NEXT STEP ============ -->
+    <section class="slide s-next" data-tone="dark" data-steps="1" aria-label="The next step">
+      <div class="next-a">
+        <p class="eyebrow rv" style="--d:100">The next step</p>
+        <blockquote class="closing">
+          <p class="rv" style="--d:300">We have built the foundation.</p>
+          <p class="rv" style="--d:900">Now, with the right support, we can take <span class="nowrap">Learn<span class="wm-plus inline" aria-hidden="true"></span> Room</span> <em>beyond the prototype and closer to real classrooms.</em></p>
+        </blockquote>
+        <ul class="next-steps">
+          <li class="rv" style="--d:1500"><i data-icon="school"></i>Test in real classrooms</li>
+          <li class="rv" style="--d:1650"><i data-icon="tune"></i>Refine the system</li>
+          <li class="rv" style="--d:1800"><i data-icon="plusc"></i>Expand its capabilities</li>
+          <li class="rv" style="--d:1950"><i data-icon="grid"></i>Explore wider deployment</li>
+        </ul>
+      </div>
+
+      <div class="next-b step" data-step="1">
+        <p class="thanks">Thank you</p>
+        <p class="thanks-sub"><span class="nowrap">Learn<span class="wm-plus inline" aria-hidden="true"></span> Room</span> · Nadia Blaibleh &amp; Marah Zaid</p>
+        <p class="thanks-contact" data-contact></p>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="hud" aria-label="Slide navigation">
+    <div class="progress"></div>
+    <span class="count"><b>01</b> / 07</span>
+    <button type="button" class="fs" aria-label="Full screen (F)" title="Full screen (F)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+    </button>
+  </nav>
+
+  <noscript><p style="position:fixed;inset:auto 0 0;padding:1em;text-align:center;color:#fff">This presentation needs JavaScript.</p></noscript>
+  <script src="js/deck.js"></script>
+</body>
+</html>
